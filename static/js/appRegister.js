@@ -17,6 +17,7 @@ function register_user(){
         let confirm_apellido = validar_texto(apellido)
         let confirm_cedula = validar_numeros(cedula)
         let confirm_telefono = validar_numeros(telefono)
+        let confirm_contrasena = validar_contrasena(contrasena)
         let confirm_texto = false
         let confirm_numero = false
         
@@ -34,7 +35,14 @@ function register_user(){
             alert("Los campos cédula y teléfono solo pueden contener numeros")
         }
 
-        if (confirm_texto == true && confirm_numero == true) {
+        if (confirm_contrasena == true) {
+            
+        }
+        else {
+            alert("La contraseña no cumple todos los criterios")
+        }
+
+        if (confirm_texto == true && confirm_numero == true && confirm_contrasena == true) {
             alert("Usuario creado exitosamente")
         }
         else {
@@ -117,8 +125,56 @@ function validar_numeros(numero_campo) {
     return confirm_numero
 }
 
-function validar_contrasena() {
+function validar_contrasena(contrasena_campo) {
+    let confirm_contrasena = false
+    let confirm_cantidad = true
+    let confirm_numero = false
+    let confirm_texto_mayusc = false
+    let confirm_texto_minusc = false
+    let array_contrasena = Array.from(contrasena_campo)
+    if (array_contrasena.length > 8) {
+        for(let i=0; i<array_contrasena.length; i++){
+            if (array_contrasena[i] == '0' || array_contrasena[i] == '1' || array_contrasena[i] == '2' || array_contrasena[i] == '3' || array_contrasena[i] == '4' || array_contrasena[i] == '5' || array_contrasena[i] == '6' || array_contrasena[i] == '7' || array_contrasena[i] == '8' || array_contrasena[i] == '9') {
+                confirm_numero = true
+                break
+            }
+        }  
+        for(let i=0; i<array_contrasena.length; i++){
+            if (array_contrasena[i] == '0' || array_contrasena[i] == '1' || array_contrasena[i] == '2' || array_contrasena[i] == '3' || array_contrasena[i] == '4' || array_contrasena[i] == '5' || array_contrasena[i] == '6' || array_contrasena[i] == '7' || array_contrasena[i] == '8' || array_contrasena[i] == '9') {
+                
+            }
+            else {
+                if (array_contrasena[i] == array_contrasena[i].toUpperCase()) {
+                    confirm_texto_mayusc = true
+                }
+                if (array_contrasena[i] == array_contrasena[i].toLowerCase()) {
+                    confirm_texto_minusc = true
+                }               
+                if (confirm_texto_mayusc==true && confirm_texto_minusc==true) {
+                    break
+                }                
+            }
+        }                                            
+    }
+    else {
+        alert("La contraseña debe tener al menos 8 caracteres")
+        confirm_cantidad = false
+    }
 
+    if (confirm_numero == false) {
+        alert("La contraseña debe contener al menos un número")
+    }
+    if (confirm_texto_mayusc == false) {
+        alert("La contraseña debe contener al menos una mayuscula")
+    }
+    if (confirm_texto_minusc == false) {
+        alert("La contraseña debe contener al menos una minuscula")
+    }
+
+    if (confirm_numero == true && confirm_texto_mayusc==true && confirm_texto_minusc==true) {
+        confirm_contrasena = true
+    }
+    return confirm_contrasena
 }
 
 function validar_correo() {
